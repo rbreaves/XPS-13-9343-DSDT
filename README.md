@@ -13,7 +13,7 @@ Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope
 **For Mac users:** Please do not capture your DSDT inside OSX. Please press F4 or fn+F4 on the clover boot screen and then mount your EFI partition and take the files from /Volumes/efi/EFI/CLOVER/ACPI/origin/ or use Linux to ensure the integrity of the dump.
 
 ## A05 DSDT Status
-The dump currently does not compile, the following issues will need to be resolved before we can apply any fixes.
+Working, the original DSDT only needed slight modifications to compile.
 
 #### Recompile Errors for A05 DSDT
 Originally I had a list of 58 errors and 10 warnings broken down here, but the reality of the situation was that the ACPI version should have been changed to 5.0. It has been awhile since I have recompiled a DSDT, so that completely slipped my mind and people in the know rarely mention something so trivial.
