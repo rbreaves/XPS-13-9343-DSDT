@@ -2,7 +2,7 @@
 
 Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope to have all of the aml and dsl files dumped here. If you contribute to this project and apply patches that others had made then please cite the source in another readme in a folder created in the proper dsl and aml directory. State the original author, and the purpose of the patch.
 
-**The purpose of this project is in two parts. **
+####The purpose of this project is in two parts.
 
 **1)** Try and keep DSDT modifications in one location and to more easily compare the differences between one firmware revision to another.
 
@@ -15,10 +15,10 @@ For Mac users: Please do not capture your DSDT inside OSX. Please press F4 or fn
 ## A05 DSDT Status
 The dump currently does not compile, the following issues will need to be resolved before we can apply any fixes.
 
-#### ++Recompile Errors for A05 DSDT++
-==58 errors, 10 warnings==
+#### Recompile Errors for A05 DSDT
+```58 errors, 10 warnings```
 
-### ++Errors++
+### Errors
 #### 3 Types 
 - Object does not exist
 - Syntax error, unexpected
@@ -37,7 +37,7 @@ PTS_
 ####Object not found or not accessible from this scope:
 ^^LPCB.CRID
 
-###++Warnings++
+###Warnings
 ####2 Types
 - Uknown reserved name
 - Not all control paths return a value
@@ -45,5 +45,5 @@ PTS_
 ####Uknown reserved name:
 _HRV
 
-Not all control paths return a value:
+####Not all control paths return a value:
 RDGI, RDGP, GPEH, _PS0
