@@ -18,7 +18,7 @@ Working, the original DSDT only needed slight modifications to compile.
 #### Recompile Errors for A05 DSDT
 Originally I had a list of 58 errors and 10 warnings broken down here, but the reality of the situation was that the ACPI version should have been changed to 5.0. It has been awhile since I have recompiled a DSDT, so that completely slipped my mind and people in the know rarely mention something so trivial.
 
-So the real list of errors dwindled down to 1! and it was a simple fix. An odd return in method ADBG needed to changed ever so slightly. The change has now been made an applied to the repo. In the current state you can now use the DSDT and SSDT in A05 installs. RehabMan's repo already had the ADBG fix in it as well.
+So the real list of errors dwindled down to 1! and it was a simple fix. An odd return in method ADBG needed to changed ever so slightly. The change has now been made and applied to the repo. In the current state you can now use the DSDT and SSDT in A05 installs. RehabMan's repo already had the ADBG fix in it as well.
 
 https://github.com/RehabMan/Laptop-DSDT-Patch
 
