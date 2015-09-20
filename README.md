@@ -16,34 +16,18 @@ Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope
 The dump currently does not compile, the following issues will need to be resolved before we can apply any fixes.
 
 #### Recompile Errors for A05 DSDT
-```58 errors, 10 warnings```
+Originally I had a list of 58 errors and 10 warnings broken down here, but the reality of the situation was that the ACPI version should have been changed to 5.0. It has been awhile since I have recompiled a DSDT, so that completely slipped my mind and people in the know rarely mention something so trivial.
 
-### Errors
-#### 4 Types 
-- Object does not exist
-- Syntax error, unexpected
-- Object not accessible from this scope
-- Object not found or not accessible from this scope
+So the real list of errors dwindled down to 1! and it was a simple fix. An odd return in method ADBG needed to changed ever so slightly. The change has now been made an applied to the repo. In the current state you can now use the DSDT and SSDT in A05 installs. RehabMan's repo already had the ADBG fix in it as well.
 
-####Object does not exist:
-PICM, OSID, NHPG, NPME, GPRW, RPTS, RWAK, WAK_, WAKP, \_SB.PCI0.HDEF.GPEH, MBUF, \_SB.PCI0.GPI0._Y1C._MIN, \_SB.PCI0.GPI0._Y1C._MAX
+https://github.com/RehabMan/Laptop-DSDT-Patch
 
-####Syntax error, unexpected:
-PARSEOP_NAMESEG, "PARSEOP_SCOPE, expecting $end"
+Checkout the OSX-mods/aml/A05 folder for the SSDT and DSDT file to place in your CLOVER patch folder. Make sure you rename the DSDT-A05-xxxx file back to DSDT.aml and use the config.plist file in the Release folder, which also has a copy of the DSDT.
 
-####Object not accessible from this scope:
-PTS_
+The brightness fix that was applied was created by RehabMan and my thanks goes out to him.
 
-####Object not found or not accessible from this scope:
-^^LPCB.CRID
+####Still needs fixing?
 
-###Warnings
-####2 Types
-- Uknown reserved name
-- Not all control paths return a value
-
-####Uknown reserved name:
-_HRV
-
-####Not all control paths return a value:
-RDGI, RDGP, GPEH, _PS0
+- Map screen brightness to control keys, currently you have to use the system settings menu under Display
+- Fix webcam, no video
+- Fix SD card reader
