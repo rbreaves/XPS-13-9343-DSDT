@@ -10,7 +10,7 @@ Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope
 
 **Note:** From my own research it appears like Dell may have made it more difficult to add third-party SSDs after A00 firmware, so it would probably be useful to backport fixes all the way from the current firmware to A00.
 
-For Mac users: Please do not capture your DSDT inside OSX. Please press F4 or fn+F4 on the clover boot screen and then mount your EFI partition and take the files from /Volumes/efi/EFI/CLOVER/ACPI/origin/ or use Linux to ensure the integrity of the dump.
+**For Mac users:** Please do not capture your DSDT inside OSX. Please press F4 or fn+F4 on the clover boot screen and then mount your EFI partition and take the files from /Volumes/efi/EFI/CLOVER/ACPI/origin/ or use Linux to ensure the integrity of the dump.
 
 ## A05 DSDT Status
 The dump currently does not compile, the following issues will need to be resolved before we can apply any fixes.
@@ -19,7 +19,7 @@ The dump currently does not compile, the following issues will need to be resolv
 ```58 errors, 10 warnings```
 
 ### Errors
-#### 3 Types 
+#### 4 Types 
 - Object does not exist
 - Syntax error, unexpected
 - Object not accessible from this scope
