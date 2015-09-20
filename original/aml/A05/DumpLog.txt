@@ -1,0 +1,191 @@
+2:695  2:078  Found BIOS RSDP at EF220
+2:695  0:000  Printing ACPI tables from RSDP EF220 ...
+2:695  0:000   EF220: 'RSD PTR ', Rev: 2 (Acpi 2.0 or newer), Len: 36
+2:695  0:000    (Xsdt: DAEA90B0, Rsdt: DAEA9028)
+2:695  0:000    DAEA90B0: 'XSDT', 'CBX3   ', Rev: 1, Len: 228
+2:695  0:000    DAEA9028: 'RSDT', 'CBX3   ', Rev: 1, Len: 132
+2:695  0:000    Tables in Xsdt: 24
+2:695  0:000    0. DAEBC760: 'FACP', 'CBX3   ', Rev: 5, Len: 268
+2:695  0:000        (Dsdt: DAEA9228, Facs: DB7FFF80, XDsdt: DAEA9228, XFacs: 0)
+2:695  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160
+2:696  0:001        DB7FFF80: 'FACS', Ver: 2, Len: 64
+2:696  0:000    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132
+2:696  0:000    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68
+2:696  0:000    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156
+2:696  0:000    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60
+2:696  0:000    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56
+2:696  0:000    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109
+2:696  0:000    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66
+2:696  0:000    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198
+2:696  0:000    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75
+2:696  0:000    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52
+2:696  0:000    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291
+2:696  0:000    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160
+2:696  0:000    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311
+2:696  0:000    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+2:696  0:000    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933
+2:696  0:000    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110
+2:696  0:000    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756
+2:696  0:000    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903
+2:696  0:000    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990
+2:696  0:000    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374
+2:696  0:000    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85
+2:696  0:000    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196
+2:696  0:000    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56
+2:696  0:000    Tables in Rsdt: 24
+2:696  0:000    0. DAEA91A0: 'FACP', 'CBX3   ', Rev: 2, Len: 132
+2:696  0:000        (Dsdt: DAEA9228, Facs: DB7FFF40)
+2:696  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160
+2:697  0:001        DB7FFF40: 'FACS', Ver: 0, Len: 64
+2:697  0:000    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132
+2:697  0:000    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68
+2:697  0:000    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156
+2:697  0:000    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60
+2:697  0:000    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56
+2:697  0:000    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109
+2:697  0:000    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66
+2:697  0:000    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198
+2:697  0:000    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75
+2:697  0:000    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52
+2:697  0:000    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291
+2:697  0:000    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160
+2:697  0:000    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311
+2:697  0:000    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+2:697  0:000    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933
+2:697  0:000    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110
+2:697  0:000    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756
+2:697  0:000    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903
+2:697  0:000    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990
+2:697  0:000    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374
+2:697  0:000    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85
+2:697  0:000    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196
+2:697  0:000    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56
+2:697  0:000  Found UEFI Acpi 2.0 RSDP at DAEA9000
+2:697  0:000  Saving ACPI tables from RSDP DAEA9000 to EFI\CLOVER\ACPI\origin ...
+2:697  0:000   DAEA9000: 'RSD PTR ', Rev: 2 (Acpi 2.0 or newer), Len: 36 -> RSDP.aml
+2:706  0:009    (Xsdt: DAEA90B0, Rsdt: DAEA9028)
+2:706  0:000    DAEA90B0: 'XSDT', 'CBX3   ', Rev: 1, Len: 228 -> XSDT.aml
+2:714  0:007    DAEA9028: 'RSDT', 'CBX3   ', Rev: 1, Len: 132 -> RSDT.aml
+2:721  0:007    Tables in Xsdt: 24
+2:721  0:000    0. DAEBC760: 'FACP', 'CBX3   ', Rev: 5, Len: 268 -> FACP.aml
+2:729  0:007        (Dsdt: DAEA9228, Facs: DB7FFF80, XDsdt: DAEA9228, XFacs: 0)
+2:729  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160 -> DSDT.aml
+2:741  0:012        DB7FFF80: 'FACS', Ver: 2, Len: 64 -> FACS.aml
+2:748  0:007    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132 -> APIC.aml
+2:756  0:007    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68 -> FPDT.aml
+2:764  0:007    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156 -> FIDT.aml
+2:772  0:007    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60 -> MCFG.aml
+2:779  0:007    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56 -> HPET.aml
+2:787  0:007    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109 -> SSDT-0.aml
+2:797  0:010    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66 -> UEFI.aml
+2:805  0:008    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198 -> SSDT-1.aml
+2:813  0:007    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75 -> SSDT-2.aml
+2:827  0:014    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52 -> TPM2.aml
+2:835  0:007    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291 -> SSDT-3.aml
+2:843  0:008    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160 -> ASF!.aml
+2:852  0:008    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311 -> SSDT-4.aml
+2:860  0:007    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+ Found hidden SSDT 4 pcs
+2:860  0:000        * D81D9A98: 'ºá', '·â', Rev: 253, Len: 0  BA E1 0E 00 00 00 00 00 FD 00 00 00 00 00 00 00       * DAE15618: 'SSDT', 'ApIst', Rev: 2, Len: 1450  53 53 44 54 AA 05 00 00 02 CE 50 6D 52 65 66 00 Internal length = 1450 -> SSDT-6x.aml
+2:868  0:007        * DAE15C18: 'SSDT', 'Cpu0Cst', Rev: 2, Len: 979  53 53 44 54 D3 03 00 00 02 AE 50 6D 52 65 66 00 Internal length = 979 -> SSDT-7x.aml
+2:877  0:008        * DAE64C18: 'SSDT', 'ApCst', Rev: 2, Len: 281  53 53 44 54 19 01 00 00 02 EA 50 6D 52 65 66 00 Internal length = 281 -> SSDT-8x.aml
+2:885  0:008   -> SSDT-5.aml
+2:893  0:007    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933 -> SSDT-9.aml
+2:902  0:008    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110 -> PCCT.aml
+2:910  0:007    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756 -> SSDT-10.aml
+2:918  0:008    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903 -> SSDT-11.aml
+2:927  0:008    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990 -> SSDT-12.aml
+2:938  0:011    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374 -> SLIC.aml
+2:950  0:011    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85 -> MSDM.aml
+2:958  0:008    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196 -> CSRT.aml
+2:969  0:010    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56 -> BGRT.aml
+2:977  0:008    Tables in Rsdt: 24
+2:977  0:000    0. DAEA91A0: 'FACP', 'CBX3   ', Rev: 2, Len: 132 -> RSDT-FACP.aml
+2:988  0:010        (Dsdt: DAEA9228, Facs: DB7FFF40)
+2:988  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160
+2:989  0:001        DB7FFF40: 'FACS', Ver: 0, Len: 64 -> RSDT-FACS.aml
+2:997  0:008    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132
+2:997  0:000    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68
+2:997  0:000    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156
+2:997  0:000    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60
+2:997  0:000    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56
+2:997  0:000    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109
+2:997  0:000    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66
+2:997  0:000    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198
+2:997  0:000    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75
+2:997  0:000    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52
+2:997  0:000    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291
+2:997  0:000    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160
+2:997  0:000    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311
+2:997  0:000    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+2:997  0:000    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933
+2:997  0:000    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110
+2:997  0:000    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756
+2:997  0:000    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903
+2:997  0:000    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990
+2:997  0:000    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374
+2:997  0:000    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85
+2:997  0:000    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196
+2:997  0:000    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56
+2:997  0:000  Found UEFI Acpi 1.0 RSDP at DAEA9000
+2:997  0:000  Printing ACPI tables from RSDP DAEA9000 ...
+2:997  0:000   DAEA9000: 'RSD PTR ', Rev: 2 (Acpi 2.0 or newer), Len: 36
+2:997  0:000    (Xsdt: DAEA90B0, Rsdt: DAEA9028)
+2:997  0:000    DAEA90B0: 'XSDT', 'CBX3   ', Rev: 1, Len: 228
+2:997  0:000    DAEA9028: 'RSDT', 'CBX3   ', Rev: 1, Len: 132
+2:997  0:000    Tables in Xsdt: 24
+2:997  0:000    0. DAEBC760: 'FACP', 'CBX3   ', Rev: 5, Len: 268
+2:997  0:000        (Dsdt: DAEA9228, Facs: DB7FFF80, XDsdt: DAEA9228, XFacs: 0)
+2:997  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160
+2:999  0:001        DB7FFF80: 'FACS', Ver: 2, Len: 64
+2:999  0:000    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132
+2:999  0:000    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68
+2:999  0:000    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156
+2:999  0:000    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60
+2:999  0:000    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56
+2:999  0:000    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109
+2:999  0:000    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66
+2:999  0:000    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198
+2:999  0:000    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75
+2:999  0:000    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52
+2:999  0:000    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291
+2:999  0:000    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160
+2:999  0:000    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311
+2:999  0:000    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+2:999  0:000    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933
+2:999  0:000    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110
+2:999  0:000    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756
+2:999  0:000    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903
+2:999  0:000    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990
+2:999  0:000    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374
+2:999  0:000    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85
+2:999  0:000    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196
+2:999  0:000    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56
+2:999  0:000    Tables in Rsdt: 24
+2:999  0:000    0. DAEA91A0: 'FACP', 'CBX3   ', Rev: 2, Len: 132
+2:999  0:000        (Dsdt: DAEA9228, Facs: DB7FFF40)
+2:999  0:000        DAEA9228: 'DSDT', 'CBX3   ', Rev: 2, Len: 79160
+3:000  0:001        DB7FFF40: 'FACS', Ver: 0, Len: 64
+3:000  0:000    1. DAEBC870: 'APIC', 'CBX3   ', Rev: 3, Len: 132
+3:000  0:000    2. DAEBC8F8: 'FPDT', 'CBX3   ', Rev: 1, Len: 68
+3:000  0:000    3. DAEBC940: 'FIDT', 'CBX3   ', Rev: 1, Len: 156
+3:000  0:000    4. DAEBC9E0: 'MCFG', 'CBX3   ', Rev: 1, Len: 60
+3:000  0:000    5. DAEBCA20: 'HPET', 'CBX3   ', Rev: 1, Len: 56
+3:000  0:000    6. DAEBCA58: 'SSDT', 'SataTabl', Rev: 1, Len: 1109
+3:000  0:000    7. DAEBCEB0: 'UEFI', '', Rev: 1, Len: 66
+3:000  0:000    8. DAEBCEF8: 'SSDT', 'Tpm2Tabl', Rev: 2, Len: 1198
+3:000  0:000    9. DAEBD3A8: 'SSDT', 'MeSsdt ', Rev: 2, Len: 75
+3:000  0:000    10. DAEBD3F8: 'TPM2', '', Rev: 3, Len: 52
+3:000  0:000    11. DAEBD430: 'SSDT', 'Ther_Rvp', Rev: 2, Len: 3291
+3:000  0:000    12. DAEBE110: 'ASF!', ' HCG', Rev: 32, Len: 160
+3:000  0:000    13. DAEBE1B0: 'SSDT', 'Cpu0Ist', Rev: 2, Len: 1311
+3:000  0:000    14. DAEBE6D0: 'SSDT', 'CpuSsdt', Rev: 2, Len: 2932
+3:000  0:000    15. DAEBF248: 'SSDT', 'CppcTabl', Rev: 2, Len: 933
+3:000  0:000    16. DAEBF5F0: 'PCCT', 'PcctTabl', Rev: 5, Len: 110
+3:000  0:000    17. DAEBF660: 'SSDT', 'Cpc_Tabl', Rev: 2, Len: 2756
+3:000  0:000    18. DAEC0128: 'SSDT', 'SaSsdt ', Rev: 2, Len: 16903
+3:000  0:000    19. DAEC4330: 'SSDT', 'DptfTabl', Rev: 1, Len: 17990
+3:000  0:000    20. DAEC8978: 'SLIC', 'CBX3   ', Rev: 3, Len: 374
+3:000  0:000    21. DAEC8AF0: 'MSDM', 'CBX3   ', Rev: 3, Len: 85
+3:000  0:000    22. DAEC8B48: 'CSRT', 'BDW-ULT', Rev: 1, Len: 196
+3:000  0:000    23. DAEC8C10: 'BGRT', '', Rev: 0, Len: 56
