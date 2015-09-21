@@ -2660,6 +2660,146 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
                 Device (GFX0)
                 {
                     Name (_ADR, 0x00020000)  // _ADR: Address
+                    OperationRegion (RMPC, PCI_Config, 0x10, 4)
+                    Field (RMPC, AnyAcc, NoLock, Preserve)
+                    {
+                        BAR1,32,
+                    }
+                    Device (PNLF)
+                    {
+                        // normal PNLF declares (note some of this probably not necessary)
+                        Name (_ADR, Zero)
+                        Name (_HID, EisaId ("APP0002"))
+                        Name (_CID, "backlight")
+                        Name (_UID, 15)
+                        Name (_STA, 0x0B)
+                        //define hardware register access for brightness
+                        // lower nibble of BAR1 is status bits and not part of the address
+                        OperationRegion (BRIT, SystemMemory, And(^BAR1, Not(0xF)), 0xe1184)
+                        Field (BRIT, AnyAcc, Lock, Preserve)
+                        {
+                            Offset(0x48250),
+                            LEV2, 32,
+                            LEVL, 32,
+                            Offset(0x70040),
+                            P0BL, 32,
+                            Offset(0xc8250),
+                            LEVW, 32,
+                            LEVX, 32,
+                            Offset(0xe1180),
+                            PCHL, 32,
+                        }
+                        // LMAX: use 0xad9/0x56c/0x5db to force OS X value
+                        //       or use any arbitrary value
+                        //       or use 0 to capture BIOS setting
+                        Name (LMAX, 0xad9)
+                        // KMAX: defines the unscaled range in the _BCL table below
+                        Name (KMAX, 0xad9)
+                        // _INI deals with differences between native setting and desired
+                        Method (_INI, 0, NotSerialized)
+                        {
+                            // This 0xC value comes from looking what OS X initializes this
+                            // register to after display sleep (using ACPIDebug/ACPIPoller)
+                            Store(0xC0000000, LEVW)
+                            // determine LMAX to use
+                            If (LNot(LMAX)) { Store(ShiftRight(LEVX,16), LMAX) }
+                            If (LNot(LMAX)) { Store(KMAX, LMAX) }
+                            If (LNotEqual(LMAX, KMAX))
+                            {
+                                // Scale all the values in _BCL to the PWM max in use
+                                Store(0, Local0)
+                                While (LLess(Local0, SizeOf(_BCL)))
+                                {
+                                    Store(DerefOf(Index(_BCL,Local0)), Local1)
+                                    Divide(Multiply(Local1,LMAX), KMAX,, Local1)
+                                    Store(Local1, Index(_BCL,Local0))
+                                    Increment(Local0)
+                                }
+                                // Also scale XRGL and XRGH values
+                                Divide(Multiply(XRGL,LMAX), KMAX,, XRGL)
+                                Divide(Multiply(XRGH,LMAX), KMAX,, XRGH)
+                            }
+                            // adjust values to desired LMAX
+                            Store(ShiftRight(LEVX,16), Local1)
+                            If (LNotEqual(Local1, LMAX))
+                            {
+                                Store(And(LEVX,0xFFFF), Local0)
+                                If (LOr(LNot(Local0),LNot(Local1))) { Store(LMAX, Local0) Store(LMAX, Local1) }
+                                Divide(Multiply(Local0,LMAX), Local1,, Local0)
+                                //REVIEW: wait for vblank before setting new PWM config
+                                //Store(P0BL, Local7)
+                                //While (LEqual (P0BL, Local7)) {}
+                                Store(Or(Local0,ShiftLeft(LMAX,16)), LEVX)
+                            }
+                        }
+                        // _BCM/_BQC: set/get for brightness level
+                        Method (_BCM, 1, NotSerialized)
+                        {
+                            // store new backlight level
+                            Store(Match(_BCL, MGE, Arg0, MTR, 0, 2), Local0)
+                            If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }
+                            Store(Or(DerefOf(Index(_BCL,Local0)),ShiftLeft(LMAX,16)), LEVX)
+                        }
+                        Method (_BQC, 0, NotSerialized)
+                        {
+                            Store(Match(_BCL, MGE, And(LEVX, 0xFFFF), MTR, 0, 2), Local0)
+                            If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }
+                            Return(DerefOf(Index(_BCL, Local0)))
+                        }
+                        Method (_DOS, 1, NotSerialized)
+                        {
+                            // Note: Some systems have this defined in DSDT, so uncomment
+                            // the next line if that is the case.
+                            //External(^^_DOS, MethodObj)
+                            ^^_DOS(Arg0)
+                        }
+                        // extended _BCM/_BQC for setting "in between" levels
+                        Method (XBCM, 1, NotSerialized)
+                        {
+                            // store new backlight level
+                            If (LGreater(Arg0, XRGH)) { Store(XRGH, Arg0) }
+                            If (LAnd(Arg0, LLess(Arg0, XRGL))) { Store(XRGL, Arg0) }
+                            Store(Or(Arg0,ShiftLeft(LMAX,16)), LEVX)
+                        }
+                        Method (XBQC, 0, NotSerialized)
+                        {
+                            Store(And(LEVX,0xFFFF), Local0)
+                            If (LGreater(Local0, XRGH)) { Store(XRGH, Local0) }
+                            If (LAnd(Local0, LLess(Local0, XRGL))) { Store(XRGL, Local0) }
+                            Return(Local0)
+                        }
+                        // Set XOPT bit 0 to disable smooth transitions
+                        // Set XOPT bit 1 to wait for native BacklightHandler
+                        // Set XOPT bit 2 to force use of native BacklightHandler
+                        Name (XOPT, 0x02)
+                        // XRGL/XRGH: defines the valid range
+                        Name (XRGL, 25)
+                        Name (XRGH, 2777)
+                        // _BCL: returns list of valid brightness levels
+                        // first two entries describe ac/battery power levels
+                        Name (_BCL, Package()
+                        {
+                            2777,
+                            748,
+                            0,
+                            35, 39, 44, 50,
+                            58, 67, 77, 88,
+                            101, 115, 130, 147,
+                            165, 184, 204, 226,
+                            249, 273, 299, 326,
+                            354, 383, 414, 446,
+                            479, 514, 549, 587,
+                            625, 665, 706, 748,
+                            791, 836, 882, 930,
+                            978, 1028, 1079, 1132,
+                            1186, 1241, 1297, 1355,
+                            1414, 1474, 1535, 1598,
+                            1662, 1728, 1794, 1862,
+                            1931, 2002, 2074, 2147,
+                            2221, 2296, 2373, 2452,
+                            2531, 2612, 2694, 2777,
+                        })
+                    }
                 }
 
                 Device (B0D4)
@@ -11855,13 +11995,9 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
     Method (ADBG, 1, Serialized)
     {
-        If (CondRefOf (MDBG))
-        {
-            Return (MDBG)
-            Arg0
-        }
+        
+        Return(0)
 
-        Return (Zero)
     }
 
     OperationRegion (SPRT, SystemIO, 0xB2, 0x02)
@@ -19628,7 +19764,8 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
             Method (_Q66, 0, NotSerialized)  // _Qxx: EC Query
             {
-                Acquire (PATM, 0x0064)
+                \rmdt.p1("EC _Q66 enter")
+Acquire (PATM, 0x0064)
                 If (LNotEqual (ECRD, One))
                 {
                     Return (Zero)
@@ -19637,6 +19774,8 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
                 NEVT ()
                 Release (PATM)
                 Return (Zero)
+\rmdt.p1("EC _Q66 exit")
+
             }
 
             Method (ECR1, 1, NotSerialized)
@@ -20414,10 +20553,12 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
     Method (NEVT, 0, NotSerialized)
     {
+        \rmdt.p1("EC NEVT enter")
         Store (ECG1 (), Local0)
         Store (ECGD (), Local1)
         If (And (Local1, 0x10))
         {
+            \rmdt.p1("EC 1st IF enter")
             If (LEqual (DDDR, One))
             {
                 If (CondRefOf (\_SB.PCI0.LPCB.ECDV.DPNT))
@@ -20429,6 +20570,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
         If (And (Local1, One))
         {
+            \rmdt.p1("EC 2nd IF enter")
             If (LGreaterEqual (\_SB.OIDE (), One))
             {
                 EV10 (Zero, Zero)
@@ -20437,16 +20579,19 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
         If (And (Local0, One))
         {
+            \rmdt.p1("EC 2nd IF enter")
             EV6 (One, Zero)
         }
 
         If (And (Local0, 0x40))
         {
+            \rmdt.p1("EC 3rd IF enter")
             EV6 (0x02, Zero)
         }
 
         If (And (Local0, 0x04))
         {
+            \rmdt.p1("EC 4th IF enter")
             Store (ECG3 (), Local1)
             Store (Add (Add (GPBS (), 0x0100), 0x0190), Local2)
             OperationRegion (LGPI, SystemIO, Local2, 0x04)
@@ -20470,6 +20615,7 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
         If (And (Local0, 0x10))
         {
+            \rmdt.p1("EC 5th IF enter")
             Store (ECBT (Zero, 0x80), Local1)
             Store (ECRB (0x2D), Local2)
             EV11 (Local1, Local2)
@@ -20477,19 +20623,23 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
         If (And (Local1, 0x08))
         {
+            \rmdt.p1("EC 6th IF enter")
             Store (ECBT (One, 0x04), Local1)
             If (Local1)
             {
+                \rmdt.p1("EC 6th A IF enter")
                 Notify (\_SB.PCI0.LPCB.ECDV.VGBI, 0xC0)
             }
             Else
             {
+                \rmdt.p1("EC 6th B IF enter")
                 Notify (\_SB.PCI0.LPCB.ECDV.VGBI, 0xC1)
             }
         }
 
         If (And (Local0, 0x0100))
         {
+            \rmdt.p1("EC 7th IF enter")
             EV4 (0x0100, Zero)
             If (ECG4 ())
             {
@@ -20503,41 +20653,49 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
 
         If (And (Local0, 0x0200))
         {
+            \rmdt.p1("EC 8th IF enter")
             EV4 (0x0200, Zero)
         }
 
         If (And (Local0, 0x0400))
         {
+            \rmdt.p1("EC 9th IF enter")
             EV4 (0x0400, Zero)
         }
 
         If (And (Local0, 0x0800))
         {
+            \rmdt.p1("EC 10th IF enter")
             EV4 (0x0800, Zero)
         }
 
         If (And (Local0, 0x4000))
         {
+            \rmdt.p1("EC 11th IF enter")
             Store (ECRB (0x30), Local1)
             If (Local1)
             {
+            \rmdt.p1("EC 11th B IF enter")
                 EV12 (0x4000, Zero)
             }
         }
 
         If (And (Local0, 0x8000))
         {
+            \rmdt.p1("EC 12th IF enter")
             Store (ECRB (0x2E), Local1)
             EV13 (0x8000, Local1)
         }
 
         If (And (Local0, 0x08))
         {
+            \rmdt.p1("EC 13th IF enter")
             PWCH ()
         }
 
         If (And (Local0, 0x80))
         {
+            \rmdt.p1("EC 14th IF enter")
             SMIE ()
         }
     }
@@ -20622,19 +20780,27 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
         Store (GENS (0x11, Zero, Zero), Local0)
         If (LGreaterEqual (\_SB.OSID (), 0x20))
         {
+            \rmdt.p1("EC 19th IF enter")
             If (And (Local0, 0x04))
             {
+                \rmdt.p1("EC 20th IF enter")
                 EV5 (One, Zero)
+                //Brightness up
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x0406)
             }
 
             If (And (Local0, 0x02))
             {
+                \rmdt.p1("EC 21st IF enter")
                 EV5 (0x02, Zero)
+                //Brightness down
+                Notify(\_SB.PCI0.LPCB.PS2K, 0x0405)
             }
         }
 
         If (And (Local0, 0x08))
         {
+            \rmdt.p1("EC 22nd IF enter")
             Store (GENS (0x1D, Zero, Zero), Local0)
             EV16 (Local0, Zero)
         }
@@ -20645,21 +20811,25 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
         Store (GENS (0x10, Zero, Zero), Local0)
         If (And (Local0, 0x04))
         {
+            \rmdt.p1("EC 15th IF enter")
             SMEE (Local0)
         }
 
         If (And (Local0, 0x02))
         {
+            \rmdt.p1("EC 16th IF enter")
             EV7 (Zero, Zero)
         }
 
         If (And (Local0, 0x08))
         {
+            \rmdt.p1("EC 17th IF enter")
             EV9 (Zero, Zero)
         }
 
         If (And (Local0, 0x40))
         {
+            \rmdt.p1("EC 18th IF enter")
             EV8 (Zero, Zero)
         }
 
@@ -21686,4 +21856,112 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
         \_SB.PCI0.LPCB.ECDV.ECM9 (Arg0, Arg1)
         \_SB.SOS4 (Arg0, Arg1)
     }
+    Device (RMDT)
+    {
+        Name (_HID, "RMD0000")
+        Name (RING, Package(256) { })
+        Mutex (RTMX, 0)
+        Name (HEAD, 0)
+        Name (TAIL, 0)
+        // PUSH: Use to push a trace item into RING for ACPIDebug.kext
+        Method (PUSH, 1, NotSerialized)
+        {
+            Acquire(RTMX, 0xFFFF)
+            // push new item at HEAD
+            Add(HEAD, 1, Local0)
+            If (LGreaterEqual(Local0, SizeOf(RING))) { Store(0, Local0) }
+            if (LNotEqual(Local0, TAIL))
+            {
+                Store(Arg0, Index(RING, HEAD))
+                Store(Local0, HEAD)
+            }
+            Release(RTMX)
+            Notify(RMDT, 0x80)
+        }
+        // FTCH: Used by ACPIDebug.kext to fetch an item from RING
+        Method (FTCH, 0, NotSerialized)
+        {
+            Acquire(RTMX, 0xFFFF)
+            // pull item from TAIL and return it
+            Store(0, Local0)
+            if (LNotEqual(HEAD, TAIL))
+            {
+                Store(DerefOf(Index(RING, TAIL)), Local0)
+                Increment(TAIL)
+                If (LGreaterEqual(TAIL, SizeOf(RING))) { Store(0, TAIL) }
+            }
+            Release(RTMX)
+            Return(Local0)
+        }
+        // COUN: Used by ACPIDebug.kext to determine number of items in RING
+        Method (COUN, 0, NotSerialized)
+        {
+            Acquire(RTMX, 0xFFFF)
+            // return count of items in RING
+            Subtract(HEAD, TAIL, Local0)
+            if (LLess(Local0, 0)) { Add(Local0, SizeOf(RING), Local0) }
+            Release(RTMX)
+            Return(Local0)
+        }
+        // Helper functions for multiple params at one time
+        Method (P1, 1, NotSerialized) { PUSH(Arg0) }
+        Method (P2, 2, Serialized)
+        {
+            Name (TEMP, Package(2) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            PUSH(TEMP)
+        }
+        Method (P3, 3, Serialized)
+        {
+            Name (TEMP, Package(3) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            Store(Arg2, Index(TEMP, 2))
+            PUSH(TEMP)
+        }
+        Method (P4, 4, Serialized)
+        {
+            Name (TEMP, Package(4) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            Store(Arg2, Index(TEMP, 2))
+            Store(Arg3, Index(TEMP, 3))
+            PUSH(TEMP)
+        }
+        Method (P5, 5, Serialized)
+        {
+            Name (TEMP, Package(5) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            Store(Arg2, Index(TEMP, 2))
+            Store(Arg3, Index(TEMP, 3))
+            Store(Arg4, Index(TEMP, 4))
+            PUSH(TEMP)
+        }
+        Method (P6, 6, Serialized)
+        {
+            Name (TEMP, Package(6) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            Store(Arg2, Index(TEMP, 2))
+            Store(Arg3, Index(TEMP, 3))
+            Store(Arg4, Index(TEMP, 4))
+            Store(Arg5, Index(TEMP, 5))
+            PUSH(TEMP)
+        }
+        Method (P7, 7, Serialized)
+        {
+            Name (TEMP, Package(7) { })
+            Store(Arg0, Index(TEMP, 0))
+            Store(Arg1, Index(TEMP, 1))
+            Store(Arg2, Index(TEMP, 2))
+            Store(Arg3, Index(TEMP, 3))
+            Store(Arg4, Index(TEMP, 4))
+            Store(Arg5, Index(TEMP, 5))
+            Store(Arg6, Index(TEMP, 6))
+            PUSH(TEMP)
+        }
+    }
 }
+
