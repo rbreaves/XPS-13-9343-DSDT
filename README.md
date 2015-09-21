@@ -15,6 +15,7 @@ Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope
 ## A05 DSDT Releases
 
 v0.2 - Brightness keys now control the display brightness
+
 v0.1 - Compiled version of DSDT with brightness fix, keys do not work
 
 #### Recompile Errors for A05 DSDT
