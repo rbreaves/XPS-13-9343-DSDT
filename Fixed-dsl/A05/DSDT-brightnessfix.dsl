@@ -20661,16 +20661,12 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "DELL  ", "CBX3   ", 0x01072009)
             {
                 EV12 (0x4000, Zero)
             }
-                            //Brightness Down
-                Notify(\_SB.PCI0.LPCB.PS2K, 0x0405)
         }
 
         If (And (Local0, 0x8000))
         {
             Store (ECRB (0x2E), Local1)
             EV13 (0x8000, Local1)
-                            //Brightness Up
-                Notify(\_SB.PCI0.LPCB.PS2K, 0x0406)
         }
 
         If (And (Local0, 0x08))
