@@ -12,8 +12,10 @@ Here is a dump of A05 from an XPS 13 9343 FHD (non-touch), but eventaully I hope
 
 **For Mac users:** Please do not capture your DSDT inside OSX. Please press F4 or fn+F4 on the clover boot screen and then mount your EFI partition and take the files from /Volumes/efi/EFI/CLOVER/ACPI/origin/ or use Linux to ensure the integrity of the dump.
 
-## A05 DSDT Status
-Working, the original DSDT only needed slight modifications to compile.
+## A05 DSDT Releases
+
+v0.2 - Brightness keys now control the display brightness
+v0.1 - Compiled version of DSDT with brightness fix, keys do not work
 
 #### Recompile Errors for A05 DSDT
 Originally I had a list of 58 errors and 10 warnings broken down here, but the reality of the situation was that the ACPI version should have been changed to 5.0. It has been awhile since I have recompiled a DSDT, so that completely slipped my mind and people in the know rarely mention something so trivial.
@@ -28,6 +30,6 @@ The brightness fix that was applied was created by RehabMan and my thanks goes o
 
 ####Still needs fixing?
 
-- Map screen brightness to control keys, currently you have to use the system settings menu under Display
+- ~~Map screen brightness to control keys, currently you have to use the system settings menu under Display~~
 - Fix webcam, no video
 - Fix SD card reader
