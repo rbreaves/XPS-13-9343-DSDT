@@ -12043,13 +12043,9 @@ If (Arg0)
 
     Method (ADBG, 1, Serialized)
     {
-        If (CondRefOf (MDBG))
-        {
-            Return (MDBG)
-            Arg0
-        }
+        
+        Return(0)
 
-        Return (Zero)
     }
 
     OperationRegion (SPRT, SystemIO, 0xB2, 0x02)
@@ -20577,10 +20573,12 @@ If (Arg0)
 
     Method (NEVT, 0, NotSerialized)
     {
+        \RMDT.P1 ("EC NEVT enter")
         Store (ECG1 (), Local0)
         Store (ECGD (), Local1)
         If (And (Local1, 0x10))
         {
+            \RMDT.P1 ("EC 1st IF enter")
             If (LEqual (DDDR, One))
             {
                 If (CondRefOf (\_SB.PCI0.LPCB.ECDV.DPNT))
@@ -20592,6 +20590,7 @@ If (Arg0)
 
         If (And (Local1, One))
         {
+            \RMDT.P1 ("EC 2nd IF enter")
             If (LGreaterEqual (\_SB.OIDE (), One))
             {
                 EV10 (Zero, Zero)
@@ -20600,16 +20599,19 @@ If (Arg0)
 
         If (And (Local0, One))
         {
+            \RMDT.P1 ("EC 2nd B IF enter")
             EV6 (One, Zero)
         }
 
         If (And (Local0, 0x40))
         {
+            \RMDT.P1 ("EC 3rd IF enter")
             EV6 (0x02, Zero)
         }
 
         If (And (Local0, 0x04))
         {
+            \RMDT.P1 ("EC 4th IF enter")
             Store (ECG3 (), Local1)
             Store (Add (Add (GPBS (), 0x0100), 0x0190), Local2)
             OperationRegion (LGPI, SystemIO, Local2, 0x04)
@@ -20633,6 +20635,7 @@ If (Arg0)
 
         If (And (Local0, 0x10))
         {
+            \RMDT.P1 ("EC 5th IF enter")
             Store (ECBT (Zero, 0x80), Local1)
             Store (ECRB (0x2D), Local2)
             EV11 (Local1, Local2)
@@ -20640,19 +20643,23 @@ If (Arg0)
 
         If (And (Local1, 0x08))
         {
+            \RMDT.P1 ("EC 6th IF enter")
             Store (ECBT (One, 0x04), Local1)
             If (Local1)
             {
+                \RMDT.P1 ("EC 6th A IF enter")
                 Notify (\_SB.PCI0.LPCB.ECDV.VGBI, 0xC0)
             }
             Else
             {
+                \RMDT.P1 ("EC 6th B IF enter")
                 Notify (\_SB.PCI0.LPCB.ECDV.VGBI, 0xC1)
             }
         }
 
         If (And (Local0, 0x0100))
         {
+            \RMDT.P1 ("EC 7th IF enter")
             EV4 (0x0100, Zero)
             If (ECG4 ())
             {
@@ -20666,41 +20673,49 @@ If (Arg0)
 
         If (And (Local0, 0x0200))
         {
+            \RMDT.P1 ("EC 8th IF enter")
             EV4 (0x0200, Zero)
         }
 
         If (And (Local0, 0x0400))
         {
+            \RMDT.P1 ("EC 9th IF enter")
             EV4 (0x0400, Zero)
         }
 
         If (And (Local0, 0x0800))
         {
+            \RMDT.P3 ("EC 10th IF enter", Local0, 0x0800)
             EV4 (0x0800, Zero)
         }
 
         If (And (Local0, 0x4000))
         {
+            \RMDT.P1 ("EC 11th IF enter")
             Store (ECRB (0x30), Local1)
             If (Local1)
             {
+                \RMDT.P1 ("EC 11th B IF enter")
                 EV12 (0x4000, Zero)
             }
         }
 
         If (And (Local0, 0x8000))
         {
+            \RMDT.P1 ("EC 12th IF enter")
             Store (ECRB (0x2E), Local1)
             EV13 (0x8000, Local1)
         }
 
         If (And (Local0, 0x08))
         {
+            \RMDT.P1 ("EC 13th IF enter")
             PWCH ()
         }
 
         If (And (Local0, 0x80))
         {
+            \RMDT.P1 ("EC 14th IF enter")
             SMIE ()
         }
     }
@@ -20787,12 +20802,16 @@ If (Arg0)
         {
             If (And (Local0, 0x04))
             {
+                \RMDT.P1 ("EC 20th IF enter")
                 EV5 (One, Zero)
+                Notify (\_SB.PCI0.LPCB.PS2K, 0x0406)
             }
 
             If (And (Local0, 0x02))
             {
+                \RMDT.P1 ("EC 21st IF enter")
                 EV5 (0x02, Zero)
+                Notify (\_SB.PCI0.LPCB.PS2K, 0x0405)
             }
         }
 
@@ -21066,19 +21085,6 @@ If (Arg0)
                 })
                 Method (_STA, 0, NotSerialized)  // _STA: Status
                 {
-                    Store (EEAC (0x05, Zero), Local0)
-                    If (LLess (Local0, 0x02))
-                    {
-                        Return (Zero)
-                    }
-
-                    Store (ECG5 (), Local0)
-                    And (Local0, 0x08, Local0)
-                    If (Local0)
-                    {
-                        Return (0x1F)
-                    }
-
                     Return (Zero)
                 }
 

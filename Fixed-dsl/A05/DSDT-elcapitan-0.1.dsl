@@ -12043,13 +12043,9 @@ If (Arg0)
 
     Method (ADBG, 1, Serialized)
     {
-        If (CondRefOf (MDBG))
-        {
-            Return (MDBG)
-            Arg0
-        }
+        
+        Return(0)
 
-        Return (Zero)
     }
 
     OperationRegion (SPRT, SystemIO, 0xB2, 0x02)
@@ -21066,19 +21062,6 @@ If (Arg0)
                 })
                 Method (_STA, 0, NotSerialized)  // _STA: Status
                 {
-                    Store (EEAC (0x05, Zero), Local0)
-                    If (LLess (Local0, 0x02))
-                    {
-                        Return (Zero)
-                    }
-
-                    Store (ECG5 (), Local0)
-                    And (Local0, 0x08, Local0)
-                    If (Local0)
-                    {
-                        Return (0x1F)
-                    }
-
                     Return (Zero)
                 }
 
